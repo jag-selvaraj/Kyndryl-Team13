@@ -1,0 +1,17 @@
+name: Hello World on Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  say-hello:
+    runs-on: self-hosted # Use the self-hosted runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Checkout the repository to the runner
+
+      - name: Say Hello
+        run: echo "Hello, World!"
