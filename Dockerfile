@@ -7,7 +7,7 @@ WORKDIR /usr/share/nginx/html
 # Copy the static HTML file to the NGINX HTML directory
 COPY index.html /usr/share/nginx/html/index.html
 
-# Expose port 80
+# Expose port TCP/80
 EXPOSE 80
 
 # Start NGINX Web
