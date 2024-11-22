@@ -10,6 +10,6 @@ COPY index.html /usr/share/nginx/html/index.html
 # Expose port TCP/80
 EXPOSE 80
 
-# Start NGINX Web
+# Start NGINX Web Server
 CMD ["nginx", "-g", "daemon off;"]
 
