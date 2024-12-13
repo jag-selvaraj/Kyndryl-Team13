@@ -10,6 +10,9 @@ WORKDIR /usr/share/nginx/html
 # Copy the static HTML file to the NGINX HTML directory
 COPY index.html /usr/share/nginx/html/index.html
 
+# Ensure proper ownership for the non-root user
+RUN chown -R nginx_user:nginx_group /usr/share/nginx/html
+
 # Expose port TCP/80
 EXPOSE 80
 
