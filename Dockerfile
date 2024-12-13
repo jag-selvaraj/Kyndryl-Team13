@@ -1,12 +1,25 @@
+# Use the official NGINX base image
 FROM nginx:alpine
-COPY ./index.html /etc/nginx/html/index.html
-WORKDIR /app
-RUN chown -R nginx:nginx /app && chmod -R 755 /app && \
-        chown -R nginx:nginx /var/cache/nginx && \
-        chown -R nginx:nginx /var/log/nginx && \
-        chown -R nginx:nginx /etc/nginx/conf.d
-RUN touch /var/run/nginx.pid && \
-        chown -R nginx:nginx /var/run/nginx.pid
-USER nginx
-#EXPOSE <PORT_NUMBER>
+
+# Create a non-root user and group with a specific UID/GID
+RUN addgroup -S nginx_group && adduser -S nginx_user -G nginx_group \
+    && mkdir -p /var/cache/nginx \
+    && chown -R nginx_user:nginx_group /var/cache/nginx /var/run /usr/share/nginx/html
+
+# Set working directory in the container
+WORKDIR /usr/share/nginx/html
+
+# Copy the static HTML file to the NGINX HTML directory
+COPY index.html /usr/share/nginx/html/index.html
+
+# Modify the default NGINX configuration to use a non-privileged port
+RUN sed -i 's/listen       80;/listen       8081;/' /etc/nginx/conf.d/default.conf
+
+# Expose non-privileged port
+EXPOSE 8081
+
+# Switch to the created non-root user
+USER nginx_user
+
+# Start NGINX server
 CMD ["nginx", "-g", "daemon off;"]
