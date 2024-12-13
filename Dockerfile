@@ -10,6 +10,9 @@ COPY index.html /usr/share/nginx/html/index.html
 # Expose port TCP/80
 EXPOSE 80
 
+# Switch to a non-root user (nginx) before running the container
+USER nginx
+
 # Start NGINX  server
 CMD ["nginx", "-g", "daemon off;"]
 
