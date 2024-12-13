@@ -3,8 +3,8 @@ FROM nginx:alpine
 
 # Create a non-root user and group with a specific UID/GID
 RUN addgroup -S nginx_group && adduser -S nginx_user -G nginx_group \
-    && mkdir -p /var/cache/nginx /var/run \
-    && chown -R nginx_user:nginx_group /var/cache/nginx /var/run /usr/share/nginx/html
+    && mkdir -p /var/cache/nginx /var/run/nginx /usr/share/nginx/html \
+    && chown -R nginx_user:nginx_group /var/cache/nginx /var/run/nginx /usr/share/nginx/html
 
 # Set working directory in the container
 WORKDIR /usr/share/nginx/html
