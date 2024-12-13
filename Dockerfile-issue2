@@ -1,0 +1,20 @@
+FROM nginx:alpine
+
+# Set environment variables with sensitive information
+ENV API_KEY=some-sensitive-api-key
+ENV DB_PASSWORD=some-db-password
+
+# Set working directory in the container
+WORKDIR /usr/share/nginx/html
+
+# Copy the static HTML file to the NGINX HTML directory
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port TCP/80
+EXPOSE 80
+
+# Switch to a non-root user (nginx) before running the container.
+USER nginx
+
+# Start NGINX  server
+CMD ["nginx", "-g", "daemon off;"]
