@@ -3,7 +3,7 @@ FROM nginx:alpine
 
 # Create a non-root user and group with a specific UID/GID
 RUN addgroup -S nginx_group && adduser -S nginx_user -G nginx_group \
-    && mkdir -p /var/cache/nginx \
+    && mkdir -p /var/cache/nginx /var/run \
     && chown -R nginx_user:nginx_group /var/cache/nginx /var/run /usr/share/nginx/html
 
 # Set working directory in the container
@@ -13,13 +13,13 @@ WORKDIR /usr/share/nginx/html
 COPY index.html /usr/share/nginx/html/index.html
 
 # Modify the default NGINX configuration to use a non-privileged port
-RUN sed -i 's/listen       80;/listen       8081;/' /etc/nginx/conf.d/default.conf
+RUN sed -i 's/listen       80;/listen       8080;/' /etc/nginx/conf.d/default.conf
 
 # Expose non-privileged port
-EXPOSE 8081
+EXPOSE 8080
 
 # Switch to the created non-root user
 USER nginx_user
 
 # Start NGINX server
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
