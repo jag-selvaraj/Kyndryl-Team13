@@ -12,14 +12,17 @@ WORKDIR /usr/share/nginx/html
 # Copy the static HTML file to the NGINX HTML directory
 COPY index.html /usr/share/nginx/html/index.html
 
-# Modify the default NGINX configuration to use a non-privileged port
-RUN sed -i 's/listen       80;/listen       8080;/' /etc/nginx/conf.d/default.conf
+# Remove the conflicting PID directive
+RUN sed -i '/pid\s\+\/var\/run\/nginx.pid;/d' /etc/nginx/nginx.conf
 
-# Expose non-privileged port
-EXPOSE 8080
+# Modify the default NGINX configuration to use a non-privileged port (8081)
+RUN sed -i 's/listen       80;/listen       8081;/' /etc/nginx/conf.d/default.conf
+
+# Expose the updated port (8081)
+EXPOSE 8081
 
 # Switch to the created non-root user
 USER nginx_user
 
 # Start NGINX server
-CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
