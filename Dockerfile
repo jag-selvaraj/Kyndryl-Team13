@@ -1,5 +1,5 @@
 # Use the official NGINX base image with a specific version tag (avoid using "latest")
-FROM nginx:1.26.2-alpine
+FROM nginx:1.27.3-alpine
 
 # Install necessary utilities and clean up afterwards (reducing image size)
 RUN apk add --no-cache --virtual .build-deps bash \
