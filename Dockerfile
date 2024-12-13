@@ -11,7 +11,7 @@ COPY index.html /usr/share/nginx/html/index.html
 EXPOSE 80
 
 # Switch to a non-root user (nginx) before running the container.
-USER nginx
+USER jenkins
 
 # Start NGINX  server
 CMD ["nginx", "-g", "daemon off;"]
