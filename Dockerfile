@@ -1,5 +1,4 @@
 FROM nginx:alpine
-COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./index.html /etc/nginx/html/index.html
 WORKDIR /app
 RUN chown -R nginx:nginx /app && chmod -R 755 /app && \
